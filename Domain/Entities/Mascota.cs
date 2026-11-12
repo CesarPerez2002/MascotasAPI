@@ -29,4 +29,18 @@ public class Mascota
     public string? FotoRuta { get; set; }
 
     public string? VideoRuta { get; set; }
+
+    // Método para cambiar el estado de la mascota
+    public void CambiarEstado(EstadoMascota nuevoEstado)
+    {
+        if (Estado == EstadoMascota.Adoptada &&
+            nuevoEstado != EstadoMascota.Adoptada)
+        {
+            throw new InvalidOperationException(
+                "Una mascota adoptada no puede cambiar a otro estado."
+            );
+        }
+
+        Estado = nuevoEstado;
+    }
 }

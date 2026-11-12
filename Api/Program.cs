@@ -1,4 +1,6 @@
+using Api.Middleware;
 using Application.Interfaces;
+using Application.Services;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -21,8 +23,15 @@ builder.Services.AddDbContext<MascotasDbContext>(options =>
 
 // Registrar repositorios
 builder.Services.AddScoped<IEspecieRepository, EspecieRepository>();
+builder.Services.AddScoped<IMascotaRepository, MascotaRepository>();
+
+// Registrar servicios
+builder.Services.AddScoped<IMascotaService, MascotaService>();
 
 var app = builder.Build();
+
+// Manejo centralizado de errores
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configuración de OpenAPI y Scalar
 if (app.Environment.IsDevelopment())
