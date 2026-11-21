@@ -1,5 +1,7 @@
 using Application.DTOs;
+using Application.Exceptions;
 using Application.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -9,6 +11,8 @@ namespace Api.Controllers;
 public class MascotasController : ControllerBase
 {
     private readonly IMascotaService _service;
+
+    private const long MaxVideoBytes = 30 * 1024 * 1024;
 
     public MascotasController(IMascotaService service)
     {
@@ -103,6 +107,121 @@ public class MascotasController : ControllerBase
 
         if (!eliminado)
             return NotFound("No se encontró la mascota que desea eliminar.");
+
+        return NoContent();
+    }
+
+    // PUT: api/Mascotas/1/imagen-base64
+    [HttpPut("{id:int}/imagen-base64")]
+    public async Task<IActionResult> SubirImagenBase64(
+        int id,
+        [FromBody] SubirImagenBase64Dto dto)
+    {
+        if (id <= 0)
+            return BadRequest("El ID debe ser mayor que cero.");
+
+        var guardada = await _service.SubirImagenBase64Async(id, dto);
+
+        if (!guardada)
+            return NotFound("No se encontró la mascota.");
+
+        return NoContent();
+    }
+
+    // GET: api/Mascotas/1/imagen
+    [HttpGet("{id:int}/imagen")]
+    public async Task<IActionResult> ObtenerImagen(int id)
+    {
+        if (id <= 0)
+            return BadRequest("El ID debe ser mayor que cero.");
+
+        var imagen = await _service.ObtenerImagenAsync(id);
+
+        if (imagen == null)
+            return NotFound("No se encontró la imagen de esta mascota.");
+
+        return PhysicalFile(
+            imagen.Value.RutaFisica,
+            imagen.Value.ContentType);
+    }
+
+    // DELETE: api/Mascotas/1/imagen
+    [HttpDelete("{id:int}/imagen")]
+    public async Task<IActionResult> EliminarImagen(int id)
+    {
+        if (id <= 0)
+            return BadRequest("El ID debe ser mayor que cero.");
+
+        var eliminada = await _service.EliminarImagenAsync(id);
+
+        if (!eliminada)
+            return NotFound("No se encontró la mascota o su imagen.");
+
+        return NoContent();
+    }
+
+    // PUT: api/Mascotas/1/video
+    [HttpPut("{id:int}/video")]
+    [Consumes("multipart/form-data")]
+    [RequestSizeLimit(31 * 1024 * 1024)]
+    [RequestFormLimits(MultipartBodyLengthLimit = 31 * 1024 * 1024)]
+    public async Task<IActionResult> SubirVideo(
+        int id,
+        [FromForm] IFormFile? archivo)
+    {
+        if (id <= 0)
+            return BadRequest("El ID debe ser mayor que cero.");
+
+        if (archivo == null || archivo.Length == 0)
+            return BadRequest("Debe seleccionar un video.");
+
+        if (archivo.Length > MaxVideoBytes)
+            throw new ArchivoDemasiadoGrandeException(
+                "El video no puede superar los 30 MB.");
+
+        await using var stream = archivo.OpenReadStream();
+
+        var guardado = await _service.SubirVideoAsync(
+            id,
+            stream,
+            archivo.FileName,
+            archivo.Length);
+
+        if (!guardado)
+            return NotFound("No se encontró la mascota.");
+
+        return NoContent();
+    }
+
+    // GET: api/Mascotas/1/video
+    [HttpGet("{id:int}/video")]
+    public async Task<IActionResult> ObtenerVideo(int id)
+    {
+        if (id <= 0)
+            return BadRequest("El ID debe ser mayor que cero.");
+
+        var rutaVideo = await _service.ObtenerVideoAsync(id);
+
+        if (rutaVideo == null)
+            return NotFound("No se encontró el video de esta mascota.");
+
+        return PhysicalFile(
+            rutaVideo,
+            "video/mp4",
+            enableRangeProcessing: true);
+    }
+
+    // DELETE: api/Mascotas/1/video
+    [HttpDelete("{id:int}/video")]
+    public async Task<IActionResult> EliminarVideo(int id)
+    {
+        if (id <= 0)
+            return BadRequest("El ID debe ser mayor que cero.");
+
+        var eliminado = await _service.EliminarVideoAsync(id);
+
+        if (!eliminado)
+            return NotFound("No se encontró la mascota o su video.");
 
         return NoContent();
     }

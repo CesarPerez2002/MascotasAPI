@@ -1,3 +1,4 @@
+using Application.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Middleware;
@@ -37,8 +38,21 @@ public class ExceptionHandlingMiddleware
     {
         int statusCode = exception switch
         {
-            ArgumentException => StatusCodes.Status400BadRequest,
-            InvalidOperationException => StatusCodes.Status409Conflict,
+            ArchivoDemasiadoGrandeException =>
+                StatusCodes.Status413PayloadTooLarge,
+
+            FormatoArchivoNoSoportadoException =>
+                StatusCodes.Status415UnsupportedMediaType,
+
+            ArgumentException =>
+                StatusCodes.Status400BadRequest,
+
+            FormatException =>
+                StatusCodes.Status400BadRequest,
+
+            InvalidOperationException =>
+                StatusCodes.Status409Conflict,
+
             _ => StatusCodes.Status500InternalServerError
         };
 
@@ -46,6 +60,8 @@ public class ExceptionHandlingMiddleware
         {
             400 => "Solicitud incorrecta",
             409 => "Conflicto",
+            413 => "Archivo demasiado grande",
+            415 => "Formato de archivo no soportado",
             _ => "Error interno del servidor"
         };
 

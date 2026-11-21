@@ -1,3 +1,4 @@
+
 using System.ComponentModel.DataAnnotations;
 using Domain.Enums;
 
@@ -32,8 +33,4 @@ public class ActualizarMascotaDto
     public string Historia { get; set; } = string.Empty;
 
     public EstadoMascota Estado { get; set; }
-
-    public string? FotoRuta { get; set; }
-
-    public string? VideoRuta { get; set; }
 }

@@ -1,8 +1,10 @@
 using Api.Middleware;
 using Application.Interfaces;
 using Application.Services;
+using Application.Storage;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
+using Infrastructure.Storage;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -28,6 +30,9 @@ builder.Services.AddScoped<IMascotaRepository, MascotaRepository>();
 // Registrar servicios
 builder.Services.AddScoped<IMascotaService, MascotaService>();
 
+// Registrar almacenamiento de archivos
+builder.Services.AddScoped<IAlmacenamientoArchivos, AlmacenamientoArchivos>();
+
 var app = builder.Build();
 
 // Manejo centralizado de errores
@@ -47,3 +52,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
