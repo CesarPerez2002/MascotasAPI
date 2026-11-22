@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mascotas CRUD</string>
+    <string name="titulo_lista">Mascotas</string>
+    <string name="buscar">Buscar</string>
+    <string name="buscar_hint">Nombre o raza…</string>
+    <string name="todas_las_especies">Todas las especies</string>
+    <string name="seleccione_especie">Seleccione una especie</string>
+    <string name="nueva_mascota">Nueva mascota</string>
+    <string name="reintentar">Reintentar</string>
+    <string name="usar_localhost">Probar IP fija</string>
+    <string name="usar_10_0_2_2">Probar 10.0.2.2</string>
+    <string name="cambiar_url">Cambiar URL API</string>
+    <string name="lista_vacia">No hay mascotas que coincidan.</string>
+    <string name="anterior">Anterior</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="pagina">Página %1$d de %2$d (%3$d registros)</string>
+    <string name="titulo_nueva">Nueva mascota</string>
+    <string name="titulo_editar">Editar mascota</string>
+    <string name="nombre">Nombre</string>
+    <string name="raza">Raza</string>
+    <string name="edad_meses">Edad (meses)</string>
+    <string name="historia">Historia</string>
+    <string name="sexo">Sexo</string>
+    <string name="tamano">Tamaño</string>
+    <string name="especie">Especie</string>
+    <string name="estado">Estado</string>
+    <string name="vacunada">Vacunada</string>
+    <string name="esterilizada">Esterilizada</string>
+    <string name="guardar">Guardar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="editar">Editar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="confirmar_eliminar">¿Eliminar esta mascota?</string>
+    <string name="subir_imagen">Subir imagen</string>
+    <string name="subir_video">Subir video MP4</string>
+    <string name="ver_video">Ver video</string>
+    <string name="eliminar_imagen">Quitar imagen</string>
+    <string name="eliminar_video">Quitar video</string>
+    <string name="guardado">Guardado correctamente</string>
+    <string name="error">Error</string>
+    <string name="datos_invalidos">Revisa los campos obligatorios.</string>
+    <string name="sexo_macho">Macho</string>
+    <string name="sexo_hembra">Hembra</string>
+    <string name="tamano_pequeno">Pequeño</string>
+    <string name="tamano_mediano">Mediano</string>
+    <string name="tamano_grande">Grande</string>
+    <string name="estado_disponible">Disponible</string>
+    <string name="estado_reservada">Reservada</string>
+    <string name="estado_adoptada">Adoptada</string>
+
+    <string-array name="sexos">
+        <item>Macho</item>
+        <item>Hembra</item>
+    </string-array>
+
+    <string-array name="tamanos">
+        <item>Pequeño</item>
+        <item>Mediano</item>
+        <item>Grande</item>
+    </string-array>
+
+    <string-array name="estados">
+        <item>Disponible</item>
+        <item>Reservada</item>
+        <item>Adoptada</item>
+    </string-array>
+</resources>

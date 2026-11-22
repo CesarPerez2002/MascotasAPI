@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/detalleFoto"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/subir_imagen"
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_gallery" />
+
+        <ProgressBar
+            android:id="@+id/detalleCargando"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/detalleNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/detalleEspecie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/detalleRaza"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/detalleEdad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/detalleSexo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/detalleTamano"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/detalleVacunada"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/detalleEsterilizada"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/detalleEstado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/detalleHistoria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp" />
+
+        <Button
+            android:id="@+id/botonEditar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/editar" />
+
+        <Button
+            android:id="@+id/botonSubirImagen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/subir_imagen" />
+
+        <Button
+            android:id="@+id/botonEliminarImagen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/eliminar_imagen" />
+
+        <Button
+            android:id="@+id/botonSubirVideo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/subir_video" />
+
+        <Button
+            android:id="@+id/botonVerVideo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ver_video" />
+
+        <Button
+            android:id="@+id/botonEliminarVideo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/eliminar_video" />
+
+        <Button
+            android:id="@+id/botonEliminar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/eliminar"
+            android:textColor="@android:color/holo_red_dark" />
+    </LinearLayout>
+
+</ScrollView>

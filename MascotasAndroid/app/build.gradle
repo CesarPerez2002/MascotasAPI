@@ -1,0 +1,68 @@
+plugins {
+    alias(libs.plugins.android.application)
+}
+
+def apiUrl(String key, String fallback) {
+    def value = providers.gradleProperty(key).getOrElse(fallback).trim()
+    if (!value.startsWith('http://') && !value.startsWith('https://')) {
+        throw new GradleException("URL invalida en " + key)
+    }
+    return '"' + (value.endsWith('/') ? value : value + '/') + '"'
+}
+
+android {
+    namespace 'com.ucenm.mascotascrud'
+    compileSdk 37
+
+    defaultConfig {
+        applicationId "com.ucenm.mascotascrud"
+        minSdk 26
+        targetSdk 37
+        versionCode 1
+        versionName "1.0"
+
+        // URL base por defecto: IP fija del host, reachable desde el UID de la app
+        // sin adb reverse. La API debe escuchar en 0.0.0.0:5176 (perfil "http").
+        // Si la IP del host cambia, recompilar con:
+        //   -PmascotasApiUrl=http://192.168.x.y:5176/
+        buildConfigField 'String', 'API_BASE_URL', apiUrl('mascotasApiUrl', 'http://192.168.56.1:5176/')
+        buildConfigField 'String', 'API_BASE_URL_EMULADOR', '"http://10.0.2.2:5176/"'
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    buildTypes {
+        debug {
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+
+    implementation libs.activity.ktx
+    implementation libs.appcompat
+    implementation libs.constraintlayout
+    implementation libs.material
+
+    testImplementation libs.junit
+    androidTestImplementation libs.espresso.core
+    androidTestImplementation libs.ext.junit
+}
