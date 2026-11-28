@@ -11,7 +11,10 @@ Furmulario lleno <img width="1080" height="2400" alt="02_formulario_lleno" src="
 
 
 
+
+
 Alta lista <img width="1080" height="2400" alt="03_alta_lista" src="https://github.com/user-attachments/assets/27223727-cc61-4182-adba-c2255ffcbc24" />
+
 
 
 
