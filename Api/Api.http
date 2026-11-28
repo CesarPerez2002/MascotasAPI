@@ -1,6 +1,100 @@
 @Api_HostAddress = http://localhost:5176
+@MascotaId = 1
+@EspecieId = 1
 
-GET {{Api_HostAddress}}/weatherforecast/
+### Catálogo de especies (semilla)
+GET {{Api_HostAddress}}/api/Especies
 Accept: application/json
 
-###
+### Lista paginada
+GET {{Api_HostAddress}}/api/Mascotas?page=1&pageSize=20
+Accept: application/json
+
+### Búsqueda + filtro por especie + paginación
+GET {{Api_HostAddress}}/api/Mascotas?search=luna&especieId={{EspecieId}}&page=1&pageSize=10
+Accept: application/json
+
+### Detalle
+GET {{Api_HostAddress}}/api/Mascotas/{{MascotaId}}
+Accept: application/json
+
+### Crear (201 + cabecera Location)
+POST {{Api_HostAddress}}/api/Mascotas
+Content-Type: application/json
+
+{
+  "nombre": "Luna",
+  "especieId": {{EspecieId}},
+  "raza": "Mestizo",
+  "edadMeses": 8,
+  "sexo": 1,
+  "tamano": 1,
+  "vacunada": true,
+  "esterilizada": false,
+  "historia": "Rescatada en el refugio, muy cariñosa."
+}
+
+### Actualizar (204)
+PUT {{Api_HostAddress}}/api/Mascotas/{{MascotaId}}
+Content-Type: application/json
+
+{
+  "nombre": "Luna Actualizada",
+  "especieId": {{EspecieId}},
+  "raza": "Mestizo",
+  "edadMeses": 9,
+  "sexo": 1,
+  "tamano": 1,
+  "vacunada": true,
+  "esterilizada": true,
+  "historia": "Ya esterilizada, lista para adopción.",
+  "estado": 1
+}
+
+### Subir imagen PNG en Base64 (204). No se guarda el Base64 en la tabla.
+PUT {{Api_HostAddress}}/api/Mascotas/{{MascotaId}}/imagen-base64
+Content-Type: application/json
+
+{
+  "nombreArchivo": "foto.png",
+  "imagenBase64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="
+}
+
+### Descargar imagen (image/png)
+GET {{Api_HostAddress}}/api/Mascotas/{{MascotaId}}/imagen
+Accept: image/png
+
+### Quitar imagen (204)
+DELETE {{Api_HostAddress}}/api/Mascotas/{{MascotaId}}/imagen
+
+### Subir video MP4 multipart (204). Coloca un video.mp4 junto a este archivo.
+PUT {{Api_HostAddress}}/api/Mascotas/{{MascotaId}}/video
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="archivo"; filename="video.mp4"
+Content-Type: video/mp4
+
+< ./video.mp4
+--boundary--
+
+### Reproducir video con soporte de rangos (206)
+GET {{Api_HostAddress}}/api/Mascotas/{{MascotaId}}/video
+Accept: video/mp4
+Range: bytes=0-1023
+
+### Quitar video (204)
+DELETE {{Api_HostAddress}}/api/Mascotas/{{MascotaId}}/video
+
+### Error 400: parámetros de paginación inválidos
+GET {{Api_HostAddress}}/api/Mascotas?page=0&pageSize=200
+
+### Error 404: registro inexistente
+GET {{Api_HostAddress}}/api/Mascotas/999999
+
+### Eliminar mascota (204; también borra su imagen y video del disco)
+DELETE {{Api_HostAddress}}/api/Mascotas/{{MascotaId}}
+
+### Nota: 409 Conflict
+# El middleware de la API devuelve 409 para conflictos de negocio.
+# La app Android traduce 400, 404 y 409 a mensajes claros en Repositorio.java.

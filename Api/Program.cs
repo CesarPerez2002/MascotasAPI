@@ -45,8 +45,7 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
-app.UseHttpsRedirection();
-
+// Se omite UseHttpsRedirection: la API se consume por HTTP desde el emulador.
 app.UseAuthorization();
 
 app.MapControllers();
